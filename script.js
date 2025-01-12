@@ -1,98 +1,66 @@
-// Smooth scroll for navigation links
+// Smooth Scrolling for Navigation Links
 document.querySelectorAll('nav a').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
-        targetSection.scrollIntoView({ behavior: 'smooth' });
+        const targetId = this.getAttribute('href').slice(1);
+        const targetElement = document.getElementById(targetId);
+        targetElement.scrollIntoView({
+            behavior: 'smooth'
+        });
     });
 });
 
-// Add active state to navigation items based on scroll position
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('nav a');
-    
-    let currentSection = '';
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        if (window.scrollY >= sectionTop - 100) {
-            currentSection = section.getAttribute('id');
-        }
+// Hover Effect for Content Items (Smooth animation on hover)
+const contentItems = document.querySelectorAll('.content-item');
+contentItems.forEach(item => {
+    item.addEventListener('mouseover', () => {
+        item.style.transform = 'translateY(-5px)';
+        item.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.15)';
     });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').substring(1) === currentSection) {
-            link.classList.add('active');
-        }
+
+    item.addEventListener('mouseout', () => {
+        item.style.transform = 'translateY(0)';
+        item.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
     });
 });
 
-// Animate sections on scroll
-const observerOptions = {
-    threshold: 0.2,
-    rootMargin: "0px"
+// Optional: Add dynamic effects to section headings (like animated underline on load)
+const sectionTitles = document.querySelectorAll('section h2');
+sectionTitles.forEach(title => {
+    title.addEventListener('mouseover', () => {
+        const underline = title.querySelector('::after');
+        title.style.setProperty('--scaleX', '1');
+    });
+
+    title.addEventListener('mouseout', () => {
+        title.style.setProperty('--scaleX', '0');
+    });
+});
+
+// Optional: Lazy Load Content or Images for better performance
+const lazyImages = document.querySelectorAll('img[data-src]');
+const loadImage = (image) => {
+    image.src = image.getAttribute('data-src');
+    image.removeAttribute('data-src');
 };
 
-const observer = new IntersectionObserver((entries) => {
+const imageObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+            loadImage(entry.target);
+            observer.unobserve(entry.target);
         }
     });
-}, observerOptions);
-
-document.querySelectorAll('section').forEach(section => {
-    section.classList.add('fade-in');
-    observer.observe(section);
+}, {
+    threshold: 0.1
 });
 
-// Add loading animation for team members
-document.querySelectorAll('.team-member').forEach((member, index) => {
-    member.style.animationDelay = `${index * 0.2}s`;
-    member.classList.add('slide-in');
+lazyImages.forEach(image => {
+    imageObserver.observe(image);
 });
 
-// Add interactive hover effect for tasks
-document.querySelectorAll('.task-link').forEach(task => {
-    task.addEventListener('mouseenter', function() {
-        this.querySelector('h3').style.transform = 'translateX(10px)';
-    });
-    
-    task.addEventListener('mouseleave', function() {
-        this.querySelector('h3').style.transform = 'translateX(0)';
-    });
-});
-
-// Add video lazy loading
-document.addEventListener('DOMContentLoaded', () => {
-    const video = document.querySelector('iframe');
-    if (video) {
-        video.loading = 'lazy';
-    }
-});
-
-// Add a scroll to top button
-const scrollButton = document.createElement('button');
-scrollButton.innerHTML = '↑';
-scrollButton.className = 'scroll-top';
-document.body.appendChild(scrollButton);
-
-scrollButton.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
-
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 500) {
-        scrollButton.classList.add('visible');
-    } else {
-        scrollButton.classList.remove('visible');
-    }
+// Adjust layout on window resize (if needed)
+window.addEventListener('resize', () => {
+    // You can perform any responsive logic here if necessary
+    console.log('Window resized');
 });

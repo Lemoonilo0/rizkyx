@@ -1,12 +1,12 @@
 /* CSS Custom Properties - Theme Variables */
 :root {
     /* Color System */
-    --color-primary: #4caf50;
-    --color-primary-light: #81c784;
-    --color-primary-dark: #388e3c;
-    --color-secondary: #00bcd4;
-    --color-secondary-light: #4dd0e1;
-    --color-secondary-dark: #0097a7;
+    --color-primary: #2196f3; /* Blue */
+    --color-primary-light: #64b5f6; /* Light Blue */
+    --color-primary-dark: #1976d2; /* Dark Blue */
+    --color-secondary: #03a9f4; /* Sky Blue */
+    --color-secondary-light: #4fc3f7; /* Light Sky Blue */
+    --color-secondary-dark: #0288d1; /* Dark Sky Blue */
     --color-dark: #333;
     --color-light: #f8f9fa;
     --color-text: #444;
@@ -15,7 +15,7 @@
     --color-success: #4caf50;
     --color-warning: #ff9800;
     --color-error: #f44336;
-    --color-info: #2196f3;
+    --color-info: #2196f3; /* Blue Info */
 
     /* Typography */
     --font-primary: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -90,6 +90,8 @@ body {
     min-height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    text-align: center; /* Center content horizontally */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -109,6 +111,7 @@ svg {
     width: min(90%, var(--container-max-width));
     margin-inline: auto;
     padding: var(--container-padding);
+    text-align: center; /* Center text content */
 }
 
 /* Enhanced Header with Modern Gradient */
@@ -150,30 +153,38 @@ header p {
     font-weight: 400;
 }
 
-/* Modern Sticky Navigation */
+/* Navbar Styles */
 nav {
-    background-color: var(--color-white);
+    background-color: rgba(255, 255, 255, 0.8); /* Transparent white background */
+    backdrop-filter: blur(10px); /* Smooth background blur effect */
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: var(--spacing-md) 0;
     position: sticky;
     top: 0;
     z-index: var(--z-sticky);
     box-shadow: var(--shadow-sm);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Navbar Links */
 nav a {
     color: var(--color-text);
     text-decoration: none;
-    font-size: 1.1rem;
-    margin: 0 var(--spacing-md);
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0 var(--spacing-lg);
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--radius-sm);
-    transition: all var(--transition-fast);
     position: relative;
-    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+/* Hover Effects on Navbar Links */
+nav a:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-white);
 }
 
 nav a::after {
@@ -185,40 +196,203 @@ nav a::after {
     height: 2px;
     background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
     transition: width var(--transition-normal);
-    border-radius: var(--radius-full);
 }
 
 nav a:hover::after {
     width: 100%;
 }
 
+/* Navbar Logo (optional) */
+nav .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-primary);
+    margin-right: auto;
+    padding: 0 var(--spacing-sm);
+}
+
+/* Mobile Hamburger Menu */
+.navbar-menu {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.navbar-menu a {
+    display: inline-block;
+}
+
+.navbar-burger {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.navbar-burger div {
+    width: 25px;
+    height: 3px;
+    background-color: var(--color-text);
+    border-radius: 5px;
+}
+
+/* Mobile View for Navbar */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: var(--spacing-md);
+    }
+
+    .navbar-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        margin-top: var(--spacing-md);
+    }
+
+    .navbar-menu.active {
+        display: flex;
+    }
+
+    .navbar-burger {
+        display: flex;
+    }
+
+    .navbar-menu a {
+        padding: var(--spacing-sm) 0;
+        width: 100%;
+        text-align: left;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-menu a:hover {
+        background-color: var(--color-primary-light);
+    }
+}
+
+/* Scroll-Activated Background Change */
+nav.sticky {
+    background-color: var(--color-primary-dark);
+    box-shadow: var(--shadow-lg);
+}
+
+
 /* Enhanced Section Styles */
+/* Modern Section Styles */
 section {
     margin: var(--section-spacing) 0;
     position: relative;
+    padding: var(--spacing-lg) 0;
+    background-color: var(--color-light); /* Light background for sections */
+    border-radius: var(--radius-lg); /* Rounded corners for a softer look */
+    box-shadow: var(--shadow-sm); /* Subtle shadow for depth */
+    overflow: hidden;
 }
 
+/* Section Title */
 section h2 {
     font-size: var(--font-size-h2);
+    font-weight: 700;
     color: var(--color-text);
     position: relative;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
     display: inline-block;
-    font-weight: 700;
+    text-transform: uppercase; /* Makes the title more distinctive */
+    letter-spacing: 1px;
 }
 
+/* Add a gradient underline to the section titles */
 section h2::after {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: -8px;
     left: 0;
     width: 100%;
-    height: 3px;
+    height: 2px;
     background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
     border-radius: var(--radius-full);
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
 }
 
+/* Hover effect for the section title */
+section h2:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+/* Section Content */
+section p {
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    color: var(--color-text-light);
+    max-width: 70ch;
+    margin: 0 auto var(--spacing-lg);
+    padding: 0 15px;
+    font-weight: 400;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+/* Hover effect for section content */
+section:hover p {
+    opacity: 1; /* Smooth opacity transition on hover */
+}
+
+/* Responsive Section Layout (2 or 3 Columns) */
+section .content-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+section .content-wrapper .content-item {
+    background-color: var(--color-white);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+section .content-wrapper .content-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Section Background Gradient */
+section.bg-gradient {
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary-dark));
+    color: var(--color-white);
+    box-shadow: var(--shadow-md);
+}
+
+section.bg-gradient h2 {
+    color: var(--color-white); /* Ensure title is readable */
+}
+
+section.bg-gradient p {
+    color: var(--color-light);
+}
+
+/* Alternative Section Styles */
+section.alternate {
+    background-color: var(--color-dark);
+    color: var(--color-light);
+}
+
+section.alternate h2 {
+    color: var(--color-light);
+}
+
+section.alternate p {
+    color: var(--color-text-light);
+}
+
+
 /* Modern Card Designs */
+/* Modern Card Design for Tasks */
 .tasks {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -235,21 +409,81 @@ section h2::after {
     list-style: none;
     border: 1px solid rgba(0, 0, 0, 0.05);
     overflow: hidden;
+    position: relative;
 }
 
+/* Hover effect: transform and shadow for task cards */
 .tasks li:hover {
-    transform: translateY(-4px) scale(1.02);
+    transform: translateY(-10px) scale(1.03);
     box-shadow: var(--shadow-lg);
+    cursor: pointer;
+}
+
+/* Hover effects: Task card color change */
+.tasks li:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    opacity: 0.1;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+/* Task card title */
+.tasks li h3 {
+    font-size: var(--font-size-h3);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+}
+
+/* Task card description */
+.tasks li p {
+    font-size: var(--font-size-base);
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+    font-weight: 400;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+/* Task card hover - Increase opacity on hover */
+.tasks li:hover p {
+    opacity: 1;
+}
+
+/* Add icons to task cards (optional) */
+.tasks li .task-icon {
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Responsive Layout for Small Screens */
+@media (max-width: 768px) {
+    .tasks {
+        grid-template-columns: 1fr; /* Stack tasks in a single column */
+    }
 }
 
 /* Enhanced Team Grid */
+/* Modern Team Grid Layout */
 .team-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: var(--spacing-lg);
     padding: var(--spacing-md);
+    margin-top: var(--spacing-xl);
 }
 
+/* Individual Team Member Styles */
 .team-member {
     background-color: var(--color-white);
     border-radius: var(--radius-md);
@@ -257,94 +491,116 @@ section h2::after {
     text-align: center;
     box-shadow: var(--shadow-sm);
     transition: all var(--transition-normal);
-    border: 1px solid rgba(0, 0, 0, 0.05);
     position: relative;
     overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.team-member::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
-    opacity: 0;
-    transition: opacity var(--transition-normal);
-}
-
+/* Hover effect for team member cards */
 .team-member:hover {
-    transform: translateY(-4px);
+    transform: translateY(-8px) scale(1.02);
     box-shadow: var(--shadow-lg);
+    cursor: pointer;
 }
 
-.team-member:hover::before {
-    opacity: 1;
+/* Circular profile picture with a border */
+.team-member .profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-full);
+    margin-bottom: var(--spacing-md);
+    object-fit: cover;
+    border: 3px solid var(--color-primary);
+    transition: all 0.3s ease;
 }
 
-/* Modern Footer */
+/* Hover effect on profile picture: scale and change border color */
+.team-member:hover .profile-picture {
+    transform: scale(1.1);
+    border-color: var(--color-secondary);
+}
+
+/* Team member name (large and bold) */
+.team-member h3 {
+    font-size: var(--font-size-h3);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: -0.02em;
+}
+
+/* Team member role (smaller, italicized) */
+.team-member p {
+    font-size: var(--font-size-base);
+    font-style: italic;
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Social icons (optional, styled in modern circular buttons) */
+.team-member .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.team-member .social-icons a {
+    color: var(--color-text);
+    font-size: 1.3rem;
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-full);
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.team-member .social-icons a:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-white);
+    transform: scale(1.1);
+}
+
+/* Responsive Layout for Small Screens */
+@media (max-width: 768px) {
+    .team-grid {
+        grid-template-columns: 1fr; /* Stack team members in a single column on small screens */
+    }
+}
+
+
 footer {
-    background: var(--color-dark);
+    background-color: var(--color-primary-dark); /* Dark blue for footer */
     color: var(--color-white);
     text-align: center;
-    padding: var(--spacing-xl) 0;
-    margin-top: auto;
+    padding: var(--spacing-lg) 0;
+    position: relative;
+    margin-top: var(--spacing-xl);
 }
 
-footer p {
-    opacity: 0.9;
-    max-width: 60ch;
-    margin-inline: auto;
-    font-size: var(--font-size-small);
+footer a {
+    color: var(--color-white);
+    text-decoration: none;
+    font-weight: 500;
+    padding: var(--spacing-xs);
+    transition: color 0.3s ease;
 }
 
-/* Enhanced Media Queries */
-@media (max-width: 768px) {
-    nav {
-        flex-direction: column;
-        align-items: center;
-        padding: var(--spacing-sm);
-    }
-    
-    nav a {
-        width: 100%;
-        text-align: center;
-        margin: var(--spacing-xs) 0;
-        padding: var(--spacing-sm);
-    }
-    
-    .team-grid {
-        gap: var(--spacing-md);
-    }
+footer a:hover {
+    color: var(--color-secondary); /* Change color on hover to light blue */
 }
 
-/* Smooth Scrolling with Offset for Fixed Header */
-html {
-    scroll-padding-top: 80px;
+/* Footer Links Hover Effects */
+footer a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+    transition: width var(--transition-normal);
 }
 
-/* Print Styles */
-@media print {
-    nav, 
-    .scroll-top,
-    footer {
-        display: none;
-    }
-    
-    body {
-        color: black;
-        background: white;
-    }
-    
-    a {
-        text-decoration: none;
-        color: black;
-    }
-}
-
-/* Focus Styles for Accessibility */
-:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
+footer a:hover::after {
+    width: 100%;
 }
